@@ -8,7 +8,7 @@ const router = Router();
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
-const getAPIInfo = async () => {
+const getApiInfo = async () => {
     const apiURL = await axios.get("https://api.thedogapi.com/v1/breeds");
     const apiInfo = await apiURL.data.map(el => {
         return{
@@ -23,7 +23,7 @@ const getAPIInfo = async () => {
     return apiInfo;
 };
 
-const getDBInfo = async () => {
+const getDbInfo = async () => {
     return await Dog.findAll({
         include: {
             model: Temperament,
@@ -35,5 +35,12 @@ const getDBInfo = async () => {
     })
 }
 
+const getAllDogs = async () => {
+    let apiInfo = await getApiInfo();
+    let dbInfo = await getDbInfo();
+    const allInfo = apiInfo.concat(dbInfo);
+    return allInfo;
+
+}
 
 module.exports = router;
