@@ -43,4 +43,17 @@ const getAllDogs = async () => {
 
 }
 
+router.get('/dogs', async (req,res) => {
+    const name = req.query.name;
+    let dogsTotal = await getAllDogs();
+    if (name){
+        let dogName = await dogsTotal.filter( el => el.name.toLowerCase().includes(name.toLowerCase()))
+        dogName.length ?
+        res.status(200).send(dogName):
+        res.status(404).send("Dog's name doesn't exist.");
+    } else {
+        res.status(200).send(dogsTotal)
+    }
+
+})
 module.exports = router;
