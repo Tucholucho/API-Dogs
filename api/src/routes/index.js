@@ -54,6 +54,10 @@ router.get('/dogs', async (req,res) => {
     } else {
         res.status(200).send(dogsTotal)
     }
-
 })
+
+router.get("/temperaments", async (req,res) =>{
+    
+})
+
 module.exports = router;
