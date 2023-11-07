@@ -1,6 +1,9 @@
 const { Router } = require('express');
 const axios = require('axios');
-const {Dog, Temperament} = require ("../db");
+const {Dog, Temperaments} = require ("../db");
+const express = require('express');
+
+
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -17,10 +20,10 @@ const getApiInfo = async () => {
         return {
             id: el.id,
             name: el.name,
-            height: el.height.map (el => el),
-            weight: el.weight.map (el => el),
+            height: el.height.metric,
+            weight: el.weight.metric,
             life_span: el.life_span,
-            temperament: el.temperament,
+            temperaments: el.temperament,
         };
     });
     return apiInfo;
@@ -30,7 +33,7 @@ const getApiInfo = async () => {
 const getDbInfo = async () => {
     return await Dog.findAll({
         include: {
-            model: Ocupattion,
+            model: Temperaments,
             attributes: ["name"],
             through:{
                 attributes: [],
@@ -51,10 +54,10 @@ router.get ("/dogs", async (req,res) => {
     const name = req.query.name;
     const dogsTotal = await getAllDogs();
     if (name){
-        const dogName = await dogsTotal.filter(el => el.name.toLowerCase().includes(name.toLowerCase()));
-        dogName.lenght ?
+        let dogName = await dogsTotal.filter(el => el.name.toLowerCase().includes(name.toLowerCase()));
+        dogName.length ?
         res.status(200).send(dogName):
-        res.status(500).send("No se ha encontrado un resultado");
+        res.status(404).send("No se ha encontrado un resultado");
     } else{
         res.status(200).send(dogsTotal)
     }
