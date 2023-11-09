@@ -79,23 +79,15 @@ router.get ("/temperaments", async (req,res) => {
     res.status(200).send(allTemperaments);
 })
 
-
-
-
-
-
-/*router.get ("/temperaments", async (req,res) => {
-    const apiTemperaments = await axios.get("https://api.thedogapi.com/v1/breeds");
-    const temperamentsArray = apiTemperaments.data.map (el => el.temperament);
-    const temps = temperamentsArray.toString().split(",");
-    temps.forEach(element => {
-        let i = element.trim();
-        Temperaments.findOrCreate({
-            where: {name:i}
-        })
-    });
-    const alltemperaments = await Temperaments.findAll();
-    res.status(200).send(alltemperaments);
-})*/
+router.get("/dogs/:idRaza", async (req,res) => {
+    const {idRaza} = req.params;
+    const allDogs = await getAllDogs();
+    const thatDog = allDogs.filter ( el => el.id == idRaza);
+    if (thatDog.length){
+        res.status(200).send(thatDog);
+    } else{
+        res.status(404).send("Dog doesn't found");
+    }
+})
 
 module.exports = router;
