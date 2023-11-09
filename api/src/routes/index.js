@@ -17,13 +17,15 @@ const router = Router();
 const getApiInfo = async () => {
     const apiUrl = await axios.get ("https://api.thedogapi.com/v1/breeds");
     const apiInfo = await apiUrl.data.map (el => {
+        let temperamentsArray = [];
+        if (el.temperament) temperamentsArray = el.temperament.split (", ");
         return {
             id: el.id,
             name: el.name,
             height: el.height.metric,
             weight: el.weight.metric,
             life_span: el.life_span,
-            temperaments: el.temperament,
+            temperaments: temperamentsArray,
         };
     });
     return apiInfo;
@@ -63,11 +65,18 @@ router.get ("/dogs", async (req,res) => {
     }
 })
 
-router.get("/temperaments", async (req,res) => {
-    const temperamentsApi = axios.get("https://api.thedogapi.com/v1/breeds");
-    const temperaments = temperamentsApi.temperaments;
-    const allTemperaments = await temperaments.findAll();
-    res(200).send(allTemperaments);
+router.get ("/temperaments", async (req,res) => {
+    const apiTemperaments = await axios.get("https://api.thedogapi.com/v1/breeds");
+    const temperamentsArray = apiTemperaments.data.map (el => el.temperament);
+    const temps = temperamentsArray.toString().split(",");
+    temps.forEach(element => {
+        let i = element.trim();
+        Temperaments.findOrCreate({
+            where: {name:i}
+        })
+    });
+    const alltemperaments = await Temperaments.findAll();
+    res.status(200).send(alltemperaments);
 })
 
 module.exports = router;
