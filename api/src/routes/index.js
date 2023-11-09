@@ -65,7 +65,7 @@ router.get ("/dogs", async (req,res) => {
 
 router.get("/temperaments", async (req,res) => {
     const temperamentsApi = axios.get("https://api.thedogapi.com/v1/breeds");
-    const temperaments = temperamentsApi.data.map(el => el.temperament);
+    const temperaments = temperamentsApi.temperaments;
     const allTemperaments = await temperaments.findAll();
     res(200).send(allTemperaments);
 })
