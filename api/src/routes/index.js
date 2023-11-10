@@ -90,4 +90,6 @@ router.get("/dogs/:idRaza", async (req,res) => {
     }
 })
 
+router.post();
+
 module.exports = router;
