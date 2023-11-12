@@ -26,6 +26,7 @@ const getApiInfo = async () => {
             weight: el.weight.metric,
             life_span: el.life_span,
             temperaments: temperamentsArray,
+            image: el.image,
         };
     });
     return apiInfo;
@@ -90,6 +91,36 @@ router.get("/dogs/:idRaza", async (req,res) => {
     }
 })
 
-router.post();
+router.post("/dogs", async (req,res) => {
+    let {
+        max_height,
+        min_height,
+        max_weight,
+        min_weight,
+        name,
+        temperaments,
+        image,
+    } = req.body
+
+    const heightRange = min_height + " - " + max_height;
+    const weightRange = min_weight + " - " + max_weight;
+
+    let dog = await Breed.create({
+        name,
+        height: heightRange,
+        weight: weightRange,
+        image: image ? image : "https://www.publicdomainpictures.net/pictures/260000/velka/dog-face-cartoon-illustration.jpg"
+    })
+
+    let selectedTemperament = await Temperaments.findAll({
+        where: {name : temperaments},
+    })
+
+    dog.addTemperament(selectedTemperament),
+
+    res.status(200).send("Dog Created")
+});
+
+router.use(express.json),
 
 module.exports = router;
