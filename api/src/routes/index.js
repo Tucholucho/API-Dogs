@@ -91,35 +91,37 @@ router.get("/dogs/:idRaza", async (req,res) => {
     }
 })
 
-router.post("/dogs", async (req,res) => {
+router.post("/dogs", async(req,res) => {
     let {
+        name,
         max_height,
         min_height,
         max_weight,
         min_weight,
-        name,
         temperaments,
+        lifeSpan,
         image,
-    } = req.body
+    } = req.body;
 
     const heightRange = min_height + " - " + max_height;
     const weightRange = min_weight + " - " + max_weight;
 
-    let dog = await Breed.create({
+    let dog = await Breed.create ({
         name,
         height: heightRange,
         weight: weightRange,
-        image: image ? image : "https://www.publicdomainpictures.net/pictures/260000/velka/dog-face-cartoon-illustration.jpg"
+        life_span: lifeSpan,
+        image: image ? image : "https://www.publicdomainpictures.net/pictures/260000/velka/dog-face-cartoon-illustration.jpg",
     })
 
-    let selectedTemperament = await Temperaments.findAll({
-        where: {name : temperaments},
+    let recivedTemperament = Temperament.findAll({
+        where: {name : temperaments}
     })
 
-    dog.addTemperament(selectedTemperament),
+    dog.addTemperament(recivedTemperament);
 
-    res.status(200).send("Dog Created")
-});
+    res.status(200).send("Dog Created");
+})
 
 router.use(express.json),
 
