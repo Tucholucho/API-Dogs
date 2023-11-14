@@ -114,7 +114,7 @@ router.post("/dogs", async(req,res) => {
         image: image ? image : "https://www.publicdomainpictures.net/pictures/260000/velka/dog-face-cartoon-illustration.jpg",
     })
 
-    let recivedTemperament = Temperament.findAll({
+    let recivedTemperament = Temperaments.findAll({
         where: {name : temperaments}
     })
 
