@@ -1,8 +1,9 @@
 import React from "react";
 import { useState,useEffect } from "react";
 import { useDispatch,useSelector} from "react-redux";
-import { getDogs } from "../../actions";
+import { getDogs, orderByName, orderByWeight } from "../../actions";
 import { Link } from "react-router-dom";
+import Card from "../Card/Card";
 
 
 export default function Home() {
@@ -19,6 +20,16 @@ export default function Home() {
         dispatch(getDogs());
     }
 
+    function handleByName(e){
+        e.preventDefault();
+        dispatch(orderByName)
+    }
+
+    function handleByWeight(e){
+        e.preventDefault();
+        dispatch(orderByWeight)
+    }
+
     return(
         <div>
             <Link to = "/dog">Create Dog</Link>
@@ -28,15 +39,22 @@ export default function Home() {
             </button>
 
             <div>
-                <select>
+                <select onClick={e=>handleByName}>
+                    <option> Alphabetical Order </option>
                     <options value = "asc">Ascendente</options>
                     <options value = "desc">Descendente</options>
                 </select>
-                <select onClink>
+                <select onClink={e=>handleByWeight}>
+                    <option> Filter by Weight </option>
                     <options value="All">Todos</options>
                     <options value="Created">Creados</options>
                     <options value="Existing">Existente</options>
                 </select>
+                {
+                    allDogs && allDogs.map(el=>{
+                        <Card name={el.name} temperaments={el.temperaments} weight={el.weight} image={el.image}/>
+                    })
+                }
             </div>
         </div>
     )

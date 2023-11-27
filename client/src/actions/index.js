@@ -12,3 +12,17 @@ export function getDogs(){
         })
     }
 }
+
+export function orderByName(payload){
+    return{
+        type: "ORDER_BY_NAME",
+        payload
+    }
+}
+
+export function orderByWeight(payload){
+    return{
+        type: "ORDER_BY_WEIGHT",
+        payload
+    }
+}
