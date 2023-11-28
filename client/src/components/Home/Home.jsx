@@ -52,7 +52,7 @@ export default function Home() {
                 </select>
                 {
                     allDogs && allDogs.map(el=>{
-                        <Card name={el.name} temperaments={el.temperaments} weight={el.weight} image={el.image}/>
+                        return (<Card name={el.name} temperaments={el.temperaments} weight={el.weight} image={el.image}/>)
                     })
                 }
             </div>

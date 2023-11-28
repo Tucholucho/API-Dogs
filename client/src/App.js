@@ -13,10 +13,10 @@ export default App;
 
 import "./App.css";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
-import LandingPage from "./components/LandingPage/LandingPage";
+import LandingPage from "./components/LandingPage/LandingPage"
 import Home from "./components/Home/Home"
-import DogDetails from "./components/DogDetails/DogDetails";
-import FormAddDog from "./components/FormAddDog/FormAddDog";
+//import DogDetails from "./components/DogDetails/DogDetails";
+//import FormAddDog from "./components/FormAddDog/FormAddDog";
 
 function App() {
   return (
@@ -28,12 +28,6 @@ function App() {
           </Route>
           <Route exact path="/home">
             <Home/>
-          </Route>
-          <Route exact path="/dog-detail/:id">
-            <DogDetails />
-          </Route>
-          <Route exact path="/dog">
-            <FormAddDog />
           </Route>
         </Switch>
       </div>
