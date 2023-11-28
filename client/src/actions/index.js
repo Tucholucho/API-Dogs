@@ -26,3 +26,10 @@ export function orderByWeight(payload){
         payload
     }
 }
+
+export function selectByOrigin(payload){
+    return{
+        type: "SELECT_BY_ORIGIN",
+        payload
+    }
+}
