@@ -11,8 +11,13 @@ function rootReducer (state = initialState,action){
                 ...state,
                 dogs:action.payload
             }
-    }
 
+        case "GET_TEMPERAMENTS":
+            return{
+                ...state,
+                temperamets: action.payload
+            }
+    }
 
 }
 
