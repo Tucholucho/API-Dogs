@@ -9,7 +9,7 @@ function rootReducer (state = initialState,action){
         case "GET_DOGS":
             return{
                 ...state,
-                dogs:action.payload
+                dogs: action.payload
             }
 
         case "GET_TEMPERAMENTS":
