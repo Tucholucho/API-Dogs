@@ -8,5 +8,5 @@ export default function Card({name, image, temperaments, weight}) {
             <h5>{weight}</h5>
             <img src={image} alt="Image Not Found" width="200px" height="200px"/>
         </div>
-    )
+    );
 }
